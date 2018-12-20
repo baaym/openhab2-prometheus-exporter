@@ -17,14 +17,12 @@ def get_metrics():
     dimmers = [ item for item in obj if item['type'].lower() == 'dimmer' ]
     switches = [ item for item in obj if item['type'].lower() == 'switch' ]
     contacts = [ item for item in obj if item['type'].lower() == 'contact' ]
-    strings = [ item for item in obj if item['type'].lower() == 'string' ]
 
     res = ''
     res = res + print_metrics(numbers, 'number', ts)
     res = res + print_metrics(dimmers, 'dimmer', ts)
     res = res + print_metrics(switches, 'switch', ts)
     res = res + print_metrics(contacts, 'contact', ts)
-    res = res + print_metrics(strings, 'string', ts)
 
     return res
 
@@ -45,8 +43,6 @@ def print_metrics(metrics, type, timestamp):
             value = 1 if value == 'ON' else 0
         elif metric['type'].lower() == 'contact':
             value = 1 if value == 'OPEN' else 0
-        else:
-            continue
 
         res = res + metric_name + '{name="' + name + '"} ' + '{} {}\n'.format(value, timestamp)
 
