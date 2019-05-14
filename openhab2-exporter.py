@@ -36,7 +36,7 @@ def print_metrics(metrics, type, timestamp):
         name = metric['name']
         value = metric['state']
 
-        if value is None or value == 'NULL':
+        if value is None or value == 'NULL' or value == 'UNDEF':                                                                                                                                                                 continue                                                                                                                                                                                                 
             continue
 
         if metric['type'].lower() == 'switch':
