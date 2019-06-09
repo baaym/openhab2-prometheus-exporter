@@ -4,7 +4,7 @@ import time
 
 
 def get_metrics():
-    url = urllib.request.urlopen('http://127.0.0.1:8080/rest/items?recursive=false&fields=name,state,type')
+    url = urllib.request.urlopen('http://127.0.0.1:8080/rest/items?recursive=false&fields=name,state,type,editable')
     content_bytes = url.read()
     content = content_bytes.decode('utf-8')
 
@@ -36,7 +36,7 @@ def print_metrics(metrics, type, timestamp):
         name = metric['name']
         value = metric['state']
 
-        if value is None or value == 'NULL':
+        if value in [None, 'NULL', 'UNDEF']:
             continue
 
         if metric['type'].lower() == 'switch':
