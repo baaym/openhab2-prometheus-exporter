@@ -4,7 +4,8 @@ import time
 
 
 def get_metrics():
-    url = urllib.request.urlopen('http://127.0.0.1:8080/rest/items?recursive=false&fields=name,state,type')
+    # Note: "editable" is not used but is requested anyway to work around an OpenHAB log spam bug. See https://community.openhab.org/t/field-editable-is-required-when-getting-items-on-the-rest-api/65094
+    url = urllib.request.urlopen('http://127.0.0.1:8080/rest/items?recursive=false&fields=name,state,type,editable')
     content_bytes = url.read()
     content = content_bytes.decode('utf-8')
 
