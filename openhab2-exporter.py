@@ -2,6 +2,8 @@ import urllib.request
 import json
 import time
 
+def get_item_type(item):
+   return item['type'].lower().split(':')[0]
 
 def get_metrics():
     url = urllib.request.urlopen('http://127.0.0.1:8080/rest/items?recursive=false&fields=name,state,type')
@@ -13,10 +15,10 @@ def get_metrics():
     obj = json.loads(content)
     ts = int(round(time.time() * 1000))
 
-    numbers = [ item for item in obj if item['type'].lower() == 'number' ]
-    dimmers = [ item for item in obj if item['type'].lower() == 'dimmer' ]
-    switches = [ item for item in obj if item['type'].lower() == 'switch' ]
-    contacts = [ item for item in obj if item['type'].lower() == 'contact' ]
+    numbers = [ item for item in obj if get_item_type(item) == 'number' ]
+    dimmers = [ item for item in obj if get_item_type(item) == 'dimmer' ]
+    switches = [ item for item in obj if get_item_type(item) == 'switch' ]
+    contacts = [ item for item in obj if get_item_type(item) == 'contact' ]
 
     res = ''
     res = res + print_metrics(numbers, 'number', ts)
@@ -34,7 +36,7 @@ def print_metrics(metrics, type, timestamp):
 
     for metric in metrics:
         name = metric['name']
-        value = metric['state']
+        value = metric['state'].split(' ')[0]
 
         if value is None or value == 'NULL':
             continue
